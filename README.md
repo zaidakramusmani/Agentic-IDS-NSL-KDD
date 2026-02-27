@@ -1,143 +1,224 @@
-🛡️ AI Cyber Intelligence Agent (NSL-KDD)
 
-An intelligent Intrusion Detection System (IDS) that combines Machine Learning with Agentic Reasoning to detect, contextualize, and explain cyber threats in near real-time.
+---
 
-🚀 Overview
+# 🛡️ Autonomous Network Intrusion Detection System
 
-Traditional IDS solutions often raise alerts without sufficient context, leaving analysts to manually interpret risks.
-This project introduces an AI Cyber Intelligence Agent that not only classifies network traffic but also reasons over historical behavior using a rolling 40-packet context window.
+### Explainable AI with Agentic Reasoning (NSL-KDD)
 
-Instead of treating packets independently, the agent:
+![Python](https://img.shields.io/badge/Python-3.10-blue)
+![License](https://img.shields.io/badge/License-MIT-green)
+![ML](https://img.shields.io/badge/ML-Random%20Forest-orange)
 
-Detects attack categories
+An **intelligent Intrusion Detection System (IDS)** that combines **Machine Learning**, **Explainable AI (XAI)**, and **agentic reasoning** to detect, contextualize, and explain cyber threats in near real time.
 
-Evaluates threat persistence
+Unlike traditional IDS pipelines that generate isolated alerts, this system reasons over **temporal network behavior** using a rolling context window and produces **human-readable explanations with mitigation guidance**.
 
-Escalates risk dynamically
+---
 
-Produces human-readable explanations and mitigations
+## 🚀 Overview
 
-📊 Key Features
-Feature	Description
-Multiclass Detection	Classifies traffic into Normal, DoS, Probe, R2L, and U2R using a Random Forest model
-Agentic Escalation Logic	Context-aware reasoning escalates alerts after 10+ correlated threats
-Explainable AI (XAI)	Generates natural-language explanations and mitigation advice per packet
-Live Dashboard	Real-time UI showing packet streams, risk levels, and attack trends
-Forensic Logging	Automatically exports high-risk incidents to CSV for post-analysis
+Conventional IDS solutions often flag packets independently, leaving security analysts to manually infer severity, persistence, and intent.
 
-🛠️ Quickstart Guide
+This project introduces an **AI Cyber Intelligence Agent** that:
 
-1️⃣ Clone & Install
-git clone https://github.com/YOUR_USERNAME/ai-cyber-agent.git
-cd ai-cyber-agent
-pip install -r requirements.txt
+* Classifies network traffic using a supervised ML pipeline
+* Analyzes **historical packet context (last 40 packets)**
+* Detects sustained or correlated attack patterns
+* Dynamically escalates threat severity
+* Generates **natural-language explanations and mitigation advice**
 
-2️⃣ Prepare the Dataset
+The result is an IDS that is **interpretable, context-aware, and operationally useful**.
 
-Download the NSL-KDD dataset (KDDTrain+.txt)
+---
 
-Create a data/ directory and place the file inside:
+## ✨ Key Features
 
-data/KDDTrain+.txt
+| Feature                            | Description                                                                             |
+| ---------------------------------- | --------------------------------------------------------------------------------------- |
+| **Multiclass Intrusion Detection** | Classifies traffic into **Normal, DoS, Probe, R2L, U2R** using a Random Forest ensemble |
+| **Agentic Escalation Logic**       | Context-aware reasoning escalates alerts after **10+ correlated malicious events**      |
+| **Explainable AI (XAI)**           | Produces human-readable threat explanations and recommended actions                     |
+| **Live Monitoring Dashboard**      | Real-time UI displaying packet streams, risk levels, and attack trends                  |
+| **Forensic Logging**               | Automatically exports high-risk incidents to CSV for post-incident analysis             |
 
-3️⃣ Train the Model
+---
 
-Train once to generate the serialized ML pipeline:
+## 🧠 How the Agent Works
 
-python train.py
+The system operates through a **four-stage decision loop**:
 
+### 1️⃣ Ingestion
 
-This creates:
+Processes raw network features such as:
 
-model/pipeline.pkl
+* Protocol type
+* Service
+* Flag status
+* Byte counts and connection statistics
 
-4️⃣ Launch the Dashboard
-## ⚙️ Configuration
-To view the dashboard via a public URL (optional):
-1. Get a free token at [ngrok.com](https://ngrok.com).
-2. Set it in `app.py`: `NGROK_TOKEN = "your_token_here"`
-3. Or run locally at `http://127.0.0.1:5000`.
+### 2️⃣ Detection
 
-python app.py
-
-Upload a compatible CSV file via the dashboard to start the live intrusion simulation.
-
-🧠 How the Agent Works
-
-The system operates in a four-stage decision loop:
-
-Ingestion
-Processes raw network attributes such as protocol, service, byte counts, and flags.
-
-Detection
 A trained ML pipeline classifies each packet into one of five intrusion categories.
 
-Context Analysis
-The agent inspects the last 40 packets to detect repeated or sustained malicious behavior and escalates severity accordingly.
+### 3️⃣ Context Analysis
 
-Reasoning & Explanation
-The explain.py engine generates:
+The agent inspects the **last 40 packets** to identify:
 
-Threat rationale
+* Repeated malicious behavior
+* Persistence across time
+* Escalation conditions
 
-Severity level
+Severity increases when correlated threats exceed defined thresholds.
 
-Risk score
+### 4️⃣ Reasoning & Explanation
 
-Actionable mitigation guidance
+The XAI engine generates:
 
-📈 Model Performance
+* Threat rationale
+* Severity level
+* Risk score
+* Actionable mitigation guidance
 
-The model was trained on the NSL-KDD dataset using a Random Forest ensemble with 120 trees.
+---
 
+## 📊 Model Performance
+
+Trained on the **NSL-KDD** dataset using a **Random Forest (120 trees)**.
+
+```
               precision    recall    f1-score
 Normal           0.99       0.99       0.99
 DoS              0.98       0.97       0.98
 Probe            0.96       0.95       0.95
 R2L              0.92       0.91       0.92
 U2R              0.89       0.88       0.89
+```
 
+**Macro F1-score: 0.96**
 
-Emphasis is placed on Macro F1-score (0.96) to fairly evaluate rare but critical attack classes such as U2R and R2L.
+> Macro-averaged metrics are emphasized to fairly evaluate rare but critical attack classes such as **U2R** and **R2L**.
 
-🔬 Research & Methodology
+---
 
-To ensure academic rigor and generalizability, the following design choices were implemented:
+## 🔬 Research & Methodology
 
-Stratified Sampling
-Maintains class proportions during 80/20 train-test splits, ensuring minority attack types are properly evaluated.
+To ensure academic rigor and reproducibility, the following design principles were applied:
 
-Robust Feature Pipeline
-Uses ColumnTransformer to cleanly separate:
+### ✔ Stratified Sampling
 
-Categorical features → OneHotEncoding
+Maintains class proportions during an **80/20 train-test split**, ensuring minority classes are properly evaluated.
 
-Numerical features → StandardScaling
-This prevents data leakage and improves reproducibility.
+### ✔ Robust Feature Pipeline
 
-Class Imbalance Handling
-class_weight='balanced' penalizes misclassification of under-represented threats.
+Implemented using `ColumnTransformer`:
 
-Evaluation Strategy
-Prioritizes Macro-averaged metrics over raw accuracy to reflect real-world IDS constraints.
+* **Categorical features → OneHotEncoding**
+* **Numerical features → StandardScaling**
 
-📂 Project Structure
+This avoids data leakage and ensures consistent preprocessing.
+
+### ✔ Class Imbalance Handling
+
+Uses `class_weight="balanced"` to penalize misclassification of under-represented attacks.
+
+### ✔ Evaluation Strategy
+
+Focuses on **Macro-averaged Precision, Recall, and F1-score** rather than raw accuracy.
+
+---
+
+## 🛠️ Quickstart Guide
+
+### 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/YOUR_USERNAME/ai-cyber-agent.git
+cd ai-cyber-agent
+pip install -r requirements.txt
+```
+
+---
+
+### 2️⃣ Prepare the Dataset
+
+Download **NSL-KDD** (`KDDTrain+.txt`) and place it inside:
+
+```
+data/KDDTrain+.txt
+```
+
+> The `data/` directory is git-ignored.
+
+---
+
+### 3️⃣ Train the Model
+
+```bash
+python train.py
+```
+
+This generates:
+
+```
+model/pipeline.pkl
+```
+
+---
+
+### 4️⃣ Launch the Dashboard
+
+```bash
+python app.py
+```
+
+Access locally at:
+
+```
+http://127.0.0.1:5000
+```
+
+---
+
+## ⚙️ Optional: Public Dashboard via Ngrok
+
+1. Create a free account at **ngrok.com**
+2. Set your token in `app.py`:
+
+```python
+NGROK_TOKEN = "your_token_here"
+```
+
+3. Restart the server to obtain a public URL
+
+---
+
+## 📂 Project Structure
+
+```
 ai-cyber-agent/
 ├── app.py              # Flask server & agentic reasoning logic
 ├── train.py            # Model training & pipeline serialization
 ├── explain.py          # Explainable AI reasoning engine
 ├── templates/
 │   └── index.html      # Live dashboard UI
-├── model/              
-│   └── pipeline.pkl    # Saved ML model
+├── model/
+│   └── pipeline.pkl    # Saved ML pipeline
 ├── data/               # Dataset storage (git-ignored)
-├── requirements.txt    # Dependency list
+├── requirements.txt    # Dependencies
 └── .gitignore          # Repository hygiene
+```
 
-📄 License
+---
 
-This project is licensed under the MIT License — free to use for research, education, or production.
+## 📄 License
 
-👤 Author
+This project is licensed under the **MIT License** — free for research, education, and production use.
 
-Developed by @zaidakramusmani for the love of Cybersecurity 
+---
+
+## 👤 Author
+
+**Zaid Akram Usmani**
+Built with a deep interest in **Cybersecurity, AI-driven defense systems, and explainable machine intelligence**.
+
+---
