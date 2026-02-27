@@ -1,0 +1,1197 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>🛡️ AI Cyber Intelligence Agent — NSL-KDD 🔥</title>
+
+
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<style>
+
+
+  body {
+
+    margin: 0;
+
+    padding: 20px;
+
+    font-family: 'Share Tech Mono', monospace;
+
+    background-color: #0a0f14;
+
+    background-image:
+
+      url("data:image/svg+xml,%3csvg fill='none' height='18' stroke='%2300ff99' stroke-opacity='0.05' stroke-width='1' viewBox='0 0 24 24' width='18' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='12' cy='12' r='10'/%3e%3cpath d='M8 12h8M12 8v8'/%3e%3c/svg%3e"),
+
+      url("data:image/svg+xml,%3csvg fill='none' height='12' stroke='%2300ff99' stroke-opacity='0.03' stroke-width='1' viewBox='0 0 24 24' width='12' xmlns='http://www.w3.org/2000/svg'%3e%3crect height='20' rx='2' ry='2' width='14' x='5' y='2'/%3e%3c/svg%3e");
+
+    background-repeat: repeat, repeat;
+
+    background-position: 0 0, 10px 10px;
+
+    background-size: 48px 48px, 24px 24px;
+
+    color: #00ff99;
+
+    height: 100vh;
+
+    overflow-y: auto;
+
+  }
+
+
+  h1 {
+
+    font-size: 2.8rem;
+
+    font-weight: 900;
+
+    color: #00ff99;
+
+    text-shadow:
+
+      0 0 10px #00ff99,
+
+      0 0 25px #00ff99,
+
+      0 0 40px #00ff99;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 1rem;
+
+  }
+
+  h1 .icon {
+
+    fill: #00ff99;
+
+    width: 48px;
+
+    height: 48px;
+
+    filter: drop-shadow(0 0 10px #00ff99);
+
+  }
+
+
+  /* Container */
+
+  .container {
+
+    max-width: 1200px;
+
+    margin: auto;
+
+    background: rgba(1,8,15,0.9);
+
+    border-radius: 14px;
+
+    border: 2px solid #00ff99;
+
+    box-shadow: 0 0 30px #00ff99cc;
+
+    padding: 24px 32px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 24px;
+
+    user-select: none;
+
+  }
+
+
+  /* Upload Form */
+
+  form#uploadForm {
+
+    display: flex;
+
+    gap: 14px;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+  }
+
+  input[type="file"] {
+
+    flex-grow: 1;
+
+    min-width: 280px;
+
+    padding: 14px;
+
+    border: 2px solid #00ff99;
+
+    background: #011214;
+
+    color: #00ff99;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+    transition: background-color 0.3s ease;
+
+    outline: none;
+
+  }
+
+  input[type="file"]:hover {
+
+    background-color: #002d21;
+
+  }
+
+  button.upload-btn {
+
+    background-color: #00ff99;
+
+    color: #000;
+
+    padding: 14px 28px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    font-weight: 900;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    transition: background-color 0.3s ease;
+
+  }
+
+  button.upload-btn:hover {
+
+    background-color: #00cc74;
+
+  }
+
+  button.upload-btn svg {
+
+    width: 22px;
+
+    height: 22px;
+
+    fill: currentColor;
+
+  }
+
+
+  /* Layout: sidebar (left) and main (right) */
+
+  .content {
+
+    display: flex;
+
+    gap: 24px;
+
+  }
+
+
+  /* Left Sidebar: Compact charts stacked vertically */
+
+  .sidebar {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 16px;
+
+    width: 220px;
+
+  }
+
+  .chart-card {
+
+    background: #011214;
+
+    border: 1.5px solid #00ff99;
+
+    border-radius: 12px;
+
+    padding: 12px 14px;
+
+    box-shadow: 0 0 20px #00ff9970;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    user-select: none;
+
+  }
+
+  .chart-card small {
+
+    color: #66ffb366;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    margin-bottom: 6px;
+
+    text-transform: uppercase;
+
+  }
+
+  /* Force small canvas for compact look */
+
+  #riskChart, #gaugeChart {
+
+    width: 180px !important;
+
+    height: 130px !important;
+
+  }
+
+
+  /* Main area: packet logs + explanations */
+
+  .main {
+
+    flex-grow: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 20px;
+
+  }
+
+
+  /* Table container */
+
+  .table-container {
+
+    background: #011214;
+
+    border-radius: 12px;
+
+    border: 1.5px solid #00ff99;
+
+    box-shadow: 0 0 20px #00ff9970;
+
+    max-height: 480px;
+
+    overflow-y: auto;
+
+  }
+
+  table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    font-size: 14px;
+
+    color: #00ff99;
+
+    text-align: left;
+
+    min-width: 900px;
+
+  }
+
+  thead tr {
+
+    background: #003822;
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 10;
+
+  }
+
+  thead th {
+
+    padding: 12px 16px;
+
+    font-weight: 900;
+
+    letter-spacing: 0.1em;
+
+    border-bottom: 2px solid #00ff99;
+
+  }
+
+  tbody tr:nth-child(even) {
+
+    background: #002e24;
+
+  }
+
+  tbody tr:hover {
+
+    background: #007552;
+
+    cursor: pointer;
+
+  }
+
+  tbody td {
+
+    padding: 12px 16px;
+
+    white-space: nowrap;
+
+    max-width: 140px;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+  }
+
+
+  /* Severity badges */
+
+  .badge {
+
+    border-radius: 25px;
+
+    padding: 6px 16px;
+
+    font-weight: 700;
+
+    font-size: 12px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    user-select: none;
+
+    color: #000;
+
+    text-transform: uppercase;
+
+    box-shadow: 0 0 12px;
+
+  }
+
+  .low {
+
+    background: #66ffbb88;
+
+  }
+
+  .medium {
+
+    background: #ffdb5788;
+
+  }
+
+  .high {
+
+    background: #ff6b6bcc;
+
+    color: #fff;
+
+  }
+
+
+  /* Explanation panel */
+
+  .explanation-panel {
+
+    background: #011214;
+
+    border: 1.5px solid #00ff99;
+
+    border-radius: 12px;
+
+    padding: 20px;
+
+    min-height: 160px;
+
+    color: #88ffbb;
+
+    white-space: pre-wrap;
+
+    font-weight: 600;
+
+    font-size: 14px;
+
+    overflow-y: auto;
+
+    font-family: 'Share Tech Mono', monospace;
+
+    user-select: text;
+
+  }
+
+  .agent-suggestions {
+
+    background: #011214;
+
+    border: 1.5px solid #ffaa22;
+
+    border-radius: 12px;
+
+    padding: 20px;
+
+    min-height: 140px;
+
+    color: #ffd580;
+
+    font-weight: 700;
+
+    white-space: pre-wrap;
+
+    font-size: 14px;
+
+    overflow-y: auto;
+
+    font-family: 'Share Tech Mono', monospace;
+
+  }
+
+
+  /* High risk event count text */
+
+  .high-risk-counter {
+
+    color: #ff6b6b;
+
+    font-weight: 900;
+
+    font-size: 14px;
+
+    margin-top: 8px;
+
+    user-select: none;
+
+    text-align: right;
+
+  }
+
+
+  /* Timeline dots */
+
+  .timeline {
+
+    display: flex;
+
+    flex-wrap: nowrap;
+
+    gap: 6px;
+
+    overflow-x: auto;
+
+    user-select: none;
+
+  }
+
+  .time-dot {
+
+    min-width: 70px;
+
+    padding: 6px 8px;
+
+    border-radius: 12px;
+
+    font-weight: 700;
+
+    color: #000;
+
+    text-align: center;
+
+    white-space: nowrap;
+
+    font-size: 11px;
+
+    cursor: default;
+
+    box-shadow: 0 0 6px rgba(0,0,0,0.2);
+
+  }
+
+  .time-dot.low {
+
+    background-color: #66ffbbbb;
+
+    box-shadow: 0 0 6px #22aa5533;
+
+  }
+
+  .time-dot.medium {
+
+    background-color: #ffdb57bb;
+
+    box-shadow: 0 0 6px #aa882233;
+
+  }
+
+  .time-dot.high {
+
+    background-color: #ff6b6bcc;
+
+    color: #fff;
+
+    box-shadow: 0 0 10px #aa222222;
+
+  }
+
+
+  /* Buttons */
+
+  .btn {
+
+    border-radius: 10px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    border: none;
+
+    transition: background-color 0.3s ease;
+
+    padding: 12px 18px;
+
+    user-select: none;
+
+  }
+
+  .btn-upload {
+
+    background-color: #00ff99;
+
+    color: #000;
+
+  }
+
+  .btn-upload:hover {
+
+    background-color: #00cc74;
+
+  }
+
+  .btn-stop {
+
+    background-color: #ff6b6b;
+
+    color: #fff;
+
+  }
+
+  .btn-stop:hover {
+
+    background-color: #cc5555;
+
+  }
+
+  .btn-download {
+
+    background-color: #ffd75a;
+
+    color: #000;
+
+    font-weight: 900;
+
+    border-radius: 10px;
+
+    padding: 12px 16px;
+
+    text-decoration: none;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    user-select: none;
+
+  }
+
+  .btn-download:hover {
+
+    background-color: #ffe899;
+
+  }
+
+
+  /* Icon svg style */
+
+  svg.icon {
+
+    width: 24px;
+
+    height: 24px;
+
+    fill: currentColor;
+
+    filter: drop-shadow(0 0 3px currentColor);
+
+  }
+
+
+  /* Animations */
+
+  @keyframes fadeInUp {
+
+    from {
+
+      opacity: 0;
+
+      transform: translateY(15px);
+
+    }
+
+    to {
+
+      opacity: 1;
+
+      transform: translateY(0);
+
+    }
+
+  }
+
+  tbody tr {
+
+    animation: fadeInUp 0.35s ease forwards;
+
+  }
+
+
+  /* Responsive */
+
+  @media (max-width: 960px) {
+
+    body { padding: 12px; }
+
+    .container { padding: 16px 20px; }
+
+    .content { flex-direction: column; }
+
+    .sidebar { width: 100%; flex-direction: row; justify-content: space-around; margin-bottom: 20px; }
+
+    .chart-card { width: 48%; }
+
+    .table-container { max-height: 360px; }
+
+  }
+
+</style>
+
+</head>
+
+<body>
+
+
+<div class="container" role="main" aria-label="AI Cyber Intelligence Agent Dashboard">
+
+
+  <h1>
+
+    <svg class="icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false" role="img">
+
+      <path d="M32 4C18 4 6.5 15.3 6.5 29.6 6.5 44.4 18 56 32 56s25.5-11.6 25.5-26.4C57.5 15.4 45.9 4 32 4zm0 48c-9 0-16.5-6.7-16.5-16.4S23 19.3 32 19.3 48.5 26 48.5 36.4 41 52 32 52zm-3.5-22.7h-4l-2 6h4l2-6zm13 6h4l2-6h-4l-2 6zM36 22c-2.1 0-3.7 1.5-3.7 3.4h2.2c0-.7.5-1.2 1.1-1.2s1.1.6 1.1 1.2-.5 1.2-1.1 1.2c-.3 0-.5-.1-.7-.3v-1.6h-1v4.5h1.9c2.7 0 4.5-1.9 4.5-4.4 0-2.6-1.7-4.3-4.4-4.3z"/>
+
+    </svg>
+
+    AI Cyber Intelligence Agent — NSL-KDD
+
+  </h1>
+
+
+  <form id="uploadForm" aria-label="CSV Upload Form">
+
+    <input type="file" name="file" id="fileInput" accept=".csv" required aria-required="true" aria-describedby="fileHelp" />
+
+    <button type="submit" class="btn btn-upload" aria-label="Upload and Analyze CSV file">
+
+      Analyze
+
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" role="img">
+
+        <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+      </svg>
+
+    </button>
+
+    <a href="/download/high_risk_log.csv" class="btn btn-download" aria-label="Download High Risk Log CSV" target="_blank" rel="noopener">
+
+      Download High-Risk Log
+
+    </a>
+
+    <p id="fileHelp" style="color:#0d6d5a; font-size: 13px; margin-top: 6px;">
+
+      Upload your NSL-KDD CSV dataset for live analysis.
+
+    </p>
+
+  </form>
+
+
+  <div class="content">
+
+
+    <div class="sidebar" aria-label="Risk charts and timeline">
+
+      <div class="chart-card" aria-label="Risk Over Time Chart">
+
+        <small>Risk Over Time</small>
+
+        <canvas id="riskChart"></canvas>
+
+      </div>
+
+      <div class="chart-card" aria-label="Current Risk Gauge">
+
+        <small>Current Risk</small>
+
+        <canvas id="gaugeChart"></canvas>
+
+      </div>
+
+    </div>
+
+
+    <div class="main">
+
+      <div class="table-container" aria-label="Live packets log">
+
+        <table role="table" aria-describedby="packetSummary">
+
+          <thead>
+
+            <tr>
+
+              <th>#</th>
+
+              <th>Protocol</th>
+
+              <th>Service</th>
+
+              <th>Flag</th>
+
+              <th>Src Bytes</th>
+
+              <th>Dst Bytes</th>
+
+              <th>Prediction</th>
+
+              <th>Severity</th>
+
+              <th>Action</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody id="tbody"></tbody>
+
+        </table>
+
+        <div id="packetSummary" class="high-risk-counter" aria-live="polite" aria-atomic="true">No high-risk events yet.</div>
+
+      </div>
+
+
+      <div class="explanation-panel" id="explain" aria-live="polite" aria-atomic="true" role="region" tabindex="0">
+
+        Select a packet row to see explanation and agent reasoning.
+
+      </div>
+
+
+      <div class="agent-suggestions" id="suggestions" aria-live="polite" aria-atomic="true" role="region" tabindex="0">
+
+        Agent suggestions will appear here.
+
+      </div>
+
+    </div>
+
+
+  </div>
+
+</div>
+
+
+<script>
+
+
+  const tbody = document.getElementById('tbody');
+
+  const explain = document.getElementById('explain');
+
+  const suggestions = document.getElementById('suggestions');
+
+  const packetSummary = document.getElementById('packetSummary');
+
+
+  // Chart.js initialization
+
+  const riskCtx = document.getElementById('riskChart').getContext('2d');
+
+  const gaugeCtx = document.getElementById('gaugeChart').getContext('2d');
+
+
+  let riskData = { labels: [], values: [] };
+
+
+  let riskChart = new Chart(riskCtx, {
+
+    type: 'line',
+
+    data: {
+
+      labels: riskData.labels,
+
+      datasets: [{
+
+        label: 'Risk Score',
+
+        data: riskData.values,
+
+        fill: true,
+
+        backgroundColor: 'rgba(0, 255, 153, 0.15)',
+
+        borderColor: 'rgba(0, 255, 153, 0.8)',
+
+        borderWidth: 2,
+
+        tension: 0.3,
+
+        pointRadius: 3,
+
+        pointHoverRadius: 5,
+
+      }]
+
+    },
+
+    options: {
+
+      animation: { duration: 200 },
+
+      scales: { y: { beginAtZero: true, max: 100, ticks: { stepSize: 20 } } },
+
+      plugins: { legend: { display: false } },
+
+      responsive: true,
+
+      maintainAspectRatio: false,
+
+    }
+
+  });
+
+
+  let gaugeChart = new Chart(gaugeCtx, {
+
+    type: 'doughnut',
+
+    data: {
+
+      labels: ['Risk', 'Safe'],
+
+      datasets: [{
+
+        data: [0, 100],
+
+        backgroundColor: ['#ff6b6b', '#084d3d'],
+
+      }]
+
+    },
+
+    options: {
+
+      cutout: '75%',
+
+      plugins: { legend: false, tooltip: { enabled: false } },
+
+      responsive: true,
+
+      maintainAspectRatio: false,
+
+    }
+
+  });
+
+
+  function setGauge(value) {
+
+    gaugeChart.data.datasets[0].data[0] = value;
+
+    gaugeChart.data.datasets[0].data[1] = 100 - value;
+
+    gaugeChart.update();
+
+  }
+
+
+  function clearUI() {
+
+    tbody.innerHTML = '';
+
+    explain.textContent = 'Select a packet row to see explanation and agent reasoning.';
+
+    suggestions.textContent = 'Agent suggestions will appear here.';
+
+    packetSummary.textContent = 'No high-risk events yet.';
+
+    riskData.labels = [];
+
+    riskData.values = [];
+
+    riskChart.update();
+
+    setGauge(0);
+
+  }
+
+
+  let pollHandle = null;
+
+
+  async function fetchLive() {
+
+    try {
+
+      const res = await fetch('/live');
+
+      const data = await res.json();
+
+      if (!Array.isArray(data)) return;
+
+
+      tbody.innerHTML = '';
+
+      let highCount = 0;
+
+
+      for (let i = 0; i < Math.min(50, data.length); i++) {
+
+        const pkt = data[i];
+
+        const tr = document.createElement('tr');
+
+        tr.style.animationDelay = (i * 0.02) + 's';
+
+
+        const severityClass = pkt.severity === 'high' ? 'high' : (pkt.severity === 'medium' ? 'medium' : 'low');
+
+
+        tr.innerHTML = `
+
+          <td>${i+1}</td>
+
+          <td>${pkt.protocol_type}</td>
+
+          <td title="${pkt.service}">${pkt.service}</td>
+
+          <td>${pkt.flag}</td>
+
+          <td>${pkt.src_bytes}</td>
+
+          <td>${pkt.dst_bytes}</td>
+
+          <td>${pkt.prediction}</td>
+
+          <td><span class="badge ${severityClass}">${pkt.severity.toUpperCase()}</span></td>
+
+          <td><button class="btn btn-upload btn-detail" style="padding:4px 12px; font-weight:600;">Details</button></td>
+
+        `;
+
+
+        tr.querySelector('.btn-detail').addEventListener('click', () => {
+
+          const reasoning = pkt.reasoning || "No reasoning available.";
+
+          const explanation = pkt.explanation || "No model explanation available.";
+
+          const suggestionsArr = Array.isArray(pkt.suggestions) ? pkt.suggestions : [];
+
+          const suggestionsText = suggestionsArr.length ? suggestionsArr.map(s => "• " + s).join('\n') : "No suggestions available.";
+
+
+          explain.textContent = `Reasoning:\n${reasoning}\n\n📖 Model Explanation:\n${explanation}`;
+
+          suggestions.textContent = `Agent Suggestions:\n${suggestionsText}`;
+
+        });
+
+
+        tbody.appendChild(tr);
+
+
+        // Update charts data (newest at end)
+
+        const timeLabel = new Date(pkt.ts * 1000).toLocaleTimeString();
+
+        riskData.labels.unshift(timeLabel);
+
+        riskData.values.unshift(pkt.risk_score);
+
+
+        if (pkt.severity === 'high') highCount++;
+
+      }
+
+
+      // Keep only latest 50 points
+
+      if (riskData.labels.length > 50) riskData.labels = riskData.labels.slice(0, 50);
+
+      if (riskData.values.length > 50) riskData.values = riskData.values.slice(0, 50);
+
+
+      riskChart.data.labels = [...riskData.labels].reverse();
+
+      riskChart.data.datasets[0].data = [...riskData.values].reverse();
+
+      riskChart.update();
+
+
+      setGauge(data.length > 0 ? data[0].risk_score : 0);
+
+
+      packetSummary.textContent = `${highCount} high-risk event${highCount!==1 ? 's' : ''} displayed.`;
+
+
+    } catch (error) {
+
+      console.error('Error fetching live data:', error);
+
+    }
+
+  }
+
+
+  function startPolling() {
+
+    if (pollHandle) clearInterval(pollHandle);
+
+    pollHandle = setInterval(() => {
+
+      fetchLive();
+
+    }, 2000);
+
+    fetchLive();
+
+  }
+
+  function stopPolling() {
+
+    if (pollHandle) clearInterval(pollHandle);
+
+    pollHandle = null;
+
+  }
+
+
+  document.getElementById('uploadForm').addEventListener('submit', async e => {
+
+    e.preventDefault();
+
+    const fileInput = document.getElementById('fileInput');
+
+    if (!fileInput.files.length) {
+
+      alert('Please select a CSV file.');
+
+      return;
+
+    }
+
+
+    clearUI();
+
+
+    const formData = new FormData();
+
+    formData.append('file', fileInput.files[0]);
+
+    formData.append('mode', 'sequential');
+
+    formData.append('delay', '2');
+
+
+    try {
+
+      const resp = await fetch('/', { method: 'POST', body: formData });
+
+      if (resp.ok) {
+
+        startPolling();
+
+      } else {
+
+        alert('Upload failed');
+
+      }
+
+    } catch (err) {
+
+      alert(`Error uploading file: ${err.message}`);
+
+    }
+
+  });
+
+
+  clearUI();
+
+</script>
+
+</body>
+
+</html>
+
+
+
