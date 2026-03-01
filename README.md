@@ -1,7 +1,7 @@
 
 ---
 
-# 🛡️ Autonomous Network Intrusion Detection System
+#  Autonomous Network Intrusion Detection System
 
 ### Explainable AI with Agentic Reasoning (NSL-KDD)
 
@@ -15,7 +15,7 @@ Unlike traditional IDS pipelines that generate isolated alerts, this system reas
 
 ---
 
-## 🚀 Overview
+##  Overview
 
 Conventional IDS solutions often flag packets independently, leaving security analysts to manually infer severity, persistence, and intent.
 
@@ -31,7 +31,7 @@ The result is an IDS that is **interpretable, context-aware, and operationally u
 
 ---
 
-## ✨ Key Features
+##  Key Features
 
 | Feature                            | Description                                                                             |
 | ---------------------------------- | --------------------------------------------------------------------------------------- |
@@ -43,11 +43,11 @@ The result is an IDS that is **interpretable, context-aware, and operationally u
 
 ---
 
-## 🧠 How the Agent Works
+##  How the Agent Works
 
 The system operates through a **four-stage decision loop**:
 
-### 1️⃣ Ingestion
+### 1️ Ingestion
 
 Processes raw network features such as:
 
@@ -56,11 +56,11 @@ Processes raw network features such as:
 * Flag status
 * Byte counts and connection statistics
 
-### 2️⃣ Detection
+### 2️ Detection
 
 A trained ML pipeline classifies each packet into one of five intrusion categories.
 
-### 3️⃣ Context Analysis
+### 3️ Context Analysis
 
 The agent inspects the **last 40 packets** to identify:
 
@@ -70,7 +70,7 @@ The agent inspects the **last 40 packets** to identify:
 
 Severity increases when correlated threats exceed defined thresholds.
 
-### 4️⃣ Reasoning & Explanation
+### 4️ Reasoning & Explanation
 
 The XAI engine generates:
 
@@ -81,7 +81,7 @@ The XAI engine generates:
 
 ---
 
-## 📊 Model Performance
+## Model Performance
 
 Trained on the **NSL-KDD** dataset using a **Random Forest (120 trees)**.
 
@@ -100,7 +100,7 @@ U2R              0.89       0.88       0.89
 
 ---
 
-## 🔬 Research & Methodology
+##  Research & Methodology
 
 To ensure academic rigor and reproducibility, the following design principles were applied:
 
@@ -127,9 +127,9 @@ Focuses on **Macro-averaged Precision, Recall, and F1-score** rather than raw ac
 
 ---
 
-## 🛠️ Quickstart Guide
+##  Quickstart Guide
 
-### 1️⃣ Clone the Repository
+### 1️ Clone the Repository
 
 ```bash
 git clone https://github.com/YOUR_USERNAME/ai-cyber-agent.git
@@ -139,7 +139,7 @@ pip install -r requirements.txt
 
 ---
 
-### 2️⃣ Prepare the Dataset
+### 2️ Prepare the Dataset
 
 Download **NSL-KDD** (`KDDTrain+.txt`) and place it inside:
 
@@ -151,7 +151,7 @@ data/KDDTrain+.txt
 
 ---
 
-### 3️⃣ Train the Model
+### 3️ Train the Model
 
 ```bash
 python train.py
@@ -165,7 +165,7 @@ model/pipeline.pkl
 
 ---
 
-### 4️⃣ Launch the Dashboard
+### 4️ Launch the Dashboard
 
 ```bash
 python app.py
@@ -179,7 +179,7 @@ http://127.0.0.1:5000
 
 ---
 
-## ⚙️ Optional: Public Dashboard via Ngrok
+##  Optional: Public Dashboard via Ngrok
 
 1. Create a free account at **ngrok.com**
 2. Set your token in `app.py`:
@@ -192,7 +192,7 @@ NGROK_TOKEN = "your_token_here"
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```
 ai-cyber-agent/
@@ -210,7 +210,7 @@ ai-cyber-agent/
 
 ---
 
-## 📄 License
+##  License
 
 This project is licensed under the **MIT License** — free for research, education, and production use.
 
